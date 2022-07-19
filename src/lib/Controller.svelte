@@ -7,6 +7,8 @@
   const L = 1 << windowsize;
   let l = L - 1;
 
+  let valid = true;
+
   $: binary = digits(l, windowsize);
   $: valid = valid && countones(binary) >= minhits;
   $: urgency = getUrgency(l, windowsize);

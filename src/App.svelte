@@ -4,9 +4,9 @@
 
   const controllers: Controller[] = [];
   const constraints: [number, number][] = [
-    [1, 3],
-    [2, 5],
-    [1, 4]
+    [1, 4],
+    [3, 6],
+    [1, 5]
   ];
 
   function step(controllerID: number) {
@@ -33,7 +33,7 @@
   </div>
 
   {#each controllers as c, index}
-    <button on:click={() => step(index)}>Hit {index}</button>
+    <button on:click={() => step(index)}>Hit {index+1}</button>
   {/each}
   <button on:click={reset}>Reset</button>
 </main>
@@ -57,11 +57,6 @@
     align-items: center;
     row-gap: 0.25em;
     margin-bottom: 1em;
-  }
-
-  img {
-    height: 16rem;
-    width: 16rem;
   }
 
   h1 {
@@ -96,18 +91,8 @@
     background-color: rgba(255, 62, 0, 0.2);
   }
 
-  p {
-    max-width: 14rem;
-    margin: 1rem auto;
-    line-height: 1.35;
-  }
-
   @media (min-width: 480px) {
     h1 {
-      max-width: none;
-    }
-
-    p {
       max-width: none;
     }
   }
