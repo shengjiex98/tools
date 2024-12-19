@@ -4,15 +4,31 @@
 
   const controllers: Controller[] = [];
   const constraints: [number, number][] = [
+    [1, 3],
     [1, 4],
-    [3, 6],
-    [1, 5]
+    [1, 3],
+    [1, 4],
+    [5, 6]
   ];
+  const cores: number = 2;
+
+  const hits: boolean[] = new Array(3).fill(false);
+  let counter = 0;
 
   function step(controllerID: number) {
     console.assert(controllerID < controllers.length);
-    for (const [i, c] of controllers.entries()) {
-      c.update(i == controllerID);
+    if (hits[controllerID]) {
+      return;
+    }
+
+    hits[controllerID] = true;
+    counter++;
+    if (counter === cores) {
+      for (const [i, c] of controllers.entries()) {
+        c.update(hits[i]);
+      }
+      counter = 0;
+      hits.fill(false);
     }
   }
 
@@ -20,6 +36,8 @@
     for (const c of controllers) {
       c.reset();
     }
+    counter = 0;
+    hits.fill(false);
   }
 </script>
 
@@ -32,6 +50,9 @@
     {/each}
   </div>
 
+  <p>
+    There are {cores - counter} controllers to hit for this time slot. 
+  </p>
   {#each controllers as c, index}
     <button on:click={() => step(index)}>Hit {index+1}</button>
   {/each}
